@@ -1,0 +1,64 @@
+use loja_pokemao;
+
+db.compras.insert(
+	{
+		cliente_nome: 'Zé Colmeia',
+		endereco_entrega: 'Praça da Sé, Nº123 - Sé - São Paulo - SP - Lado Impar',
+		valor_total: 514.00,
+		data_compra: '03/03/2020',
+		produtos: [
+			{
+				produto_id: 2,
+				nome: 'Ivysaur',
+				peso: 130 ,
+				valor: 431.00,
+                qtd: 1
+			},
+			{
+				produto_id: 4,
+				nome: 'Charmander',
+				peso: 85 ,
+				valor: 83.00,
+                qtd: 1
+			}
+		],
+		pagamento:{
+			pagamento_id: 1
+			qtd_parcelas: 1
+			faturas:[
+				{valor: 514.00}
+			]
+		}
+	}
+);
+
+db.compras.insert(
+	{
+		cliente_nome: 'Guarda Belo',
+		endereco_entrega: 'Praça da Sé, Nº222 - Sé - São Paulo - SP - Lado Par',
+		valor_total: 202.00,
+		data_compra: '03/03/2020',
+		produtos: [
+			{
+				produto_id: 7,
+				nome: 'Squirtle',
+				peso: 90 ,
+				valor: 84.00
+			},
+			{
+				produto_id: 9,
+				nome: 'Blastoise',
+				peso: 855 ,
+				valor: 118.00
+			}
+		],
+		pagamento:{
+			pagamento_id: 2
+			qtd_parcelas: 2
+			faturas:[
+				{valor: 101.00},
+				{valor: 101.00}
+			]
+		}
+	}
+);

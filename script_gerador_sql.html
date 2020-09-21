@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Gerar insert loja</title>
+</head>
+<style type="text/css">
+	label{
+		font-weight: bold;
+	}
+</style>
+<body>
+
+	<div>
+		<button id="btn" onclick="buscar()" >Gerar Insert</button>
+	</div>
+
+	<div>
+		<span id="sqlP"></span>
+		<br>
+		<span id="sqlI"></span>
+	</div>
+
+</body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
+
+	async function buscar()
+	{
+		let insertPoke = ''
+		let pokeFor = ''
+		let imgFor = ''
+		let insertImg = ''
+		let aomenosum = 0
+		let cont = 0
+
+		for (let i = 1; i < 50; i++) 
+		{
+			let result = await axios.get(`https://pokeapi.co/api/v2/pokemon/${i}`)
+
+			pokeFor =  `INSERT INTO Produtos( \`nome\`, \`peso\`, \`preco\`, \`qtd_estoque\`) VALUES ('${capitalizar(result.data.name)}',${result.data.weight},${numeroAleatorio(500)},${numeroAleatorio(20)});<br>`
+			
+			for(var k in result.data.sprites)
+			{
+				if(cont > 4){break}
+				
+				if(!!result.data.sprites[k])
+				{
+					if(!(typeof result.data.sprites[k] === 'object'))
+					{
+						imgFor = imgFor + `INSERT INTO Imagens_produto(\`link\`, \`fk_produto_id\`) VALUES ('${result.data.sprites[k]}',${i});<br>`
+						aomenosum = 1
+					}
+				}
+				
+				cont++
+			}
+
+			cont = 0
+
+			if(aomenosum == 1)
+			{
+				insertPoke = insertPoke + pokeFor
+				insertImg = insertImg + imgFor
+				aomenosum = 0
+
+				imgFor = ''
+				pokeFor = ''
+			}
+			
+		}
+		
+		document.getElementById("sqlP").innerHTML = insertPoke
+
+		document.getElementById("sqlI").innerHTML = insertImg
+
+	}
+
+
+	function numeroAleatorio(max)
+	{
+		return Math.floor(Math.random() * max)
+	}
+
+	function capitalizar(string) {
+	    return string.charAt(0).toUpperCase() + string.slice(1)
+	}
+
+</script>
+</html>
